@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 let Schema = mongoose.Schema;
+let ObjectId = Schema.ObjectId;
 
 let questionSchema = new Schema({
     title: {
@@ -20,6 +21,10 @@ let questionSchema = new Schema({
     },
     hint: {
         type: String
+    },
+    user: {
+        type: ObjectId,
+        required: [true, 'user id is necessary']
     }
 }, { strict: false });
 

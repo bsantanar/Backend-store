@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+let Schema = mongoose.Schema;
+let ObjectId = Schema.ObjectId;
+
 let questionnaireSchema = new Schema({
     instructions: {
         type: String,
@@ -10,8 +13,12 @@ let questionnaireSchema = new Schema({
         required: [true, 'questionnaire id is necessary']
     },
     questions: {
-        type: [String],
+        type: [ObjectId],
         required: [true, 'question(s) is necessary']
+    },
+    createdBy: {
+        type: ObjectId,
+        required: [true, 'user id is necessary']
     }
 });
 

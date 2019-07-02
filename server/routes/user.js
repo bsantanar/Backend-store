@@ -13,10 +13,36 @@ app.get('/users', function(req, res) {
     res.json("get users");
 });
 
-app.get('/checkToken', VerifyToken, (req, res, next) => {
-    res.status(200).json({
-        ok: true
-    });
+app.get('/user/:id', VerifyToken, function(req, res) {
+    User.findById(req.params.id, (err, user) => {
+        if (err) {
+            return res.status(409).json({
+                ok: false,
+                err
+            });
+        }
+        if (!user) return res.status(404).send("No user found.");
+        res.status(200).json({
+            ok: true,
+            user
+        });
+    })
+});
+
+app.get('/me', VerifyToken, (req, res, next) => {
+    User.findById(req.decoded.subject, (err, user) => {
+        if (err) {
+            return res.status(409).json({
+                ok: false,
+                err
+            });
+        }
+        if (!user) return res.status(404).send("No user found.");
+        res.status(200).json({
+            ok: true,
+            user
+        });
+    })
 })
 
 app.post('/register', (req, res) => {

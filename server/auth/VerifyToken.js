@@ -8,12 +8,13 @@ function verifyToken(req, res, next) {
     if (!token) {
         return res.status(401).send('Unauthorized request');
     }
-    let payload = jwt.verify(token, 'store2019');
-    if (!payload) {
-        return res.status(401).send('Unauthorized request');
-    }
-    req.userId = payload.subject;
-    next();
+    jwt.verify(token, 'store2019', (err, decoded) => {
+        if (err) return res.status(401).send({ ok: false, message: 'Unauthorized request' });
+        else {
+            req.decoded = decoded;
+            next();
+        }
+    });
 }
 
 module.exports = verifyToken;
