@@ -59,7 +59,7 @@ app.post('/register', (req, res) => {
         if (err) {
             return res.status(409).json({
                 ok: false,
-                err
+                message: 'email already exists'
             });
         }
 
@@ -99,7 +99,7 @@ app.post('/login', (req, res) => {
                     token
                 });
             } else {
-                return res.status(401).json({
+                return res.status(400).json({
                     ok: false,
                     message: "Invalid password"
                 });

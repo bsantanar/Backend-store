@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 
 let Schema = mongoose.Schema;
 let ObjectId = Schema.ObjectId;
@@ -10,6 +11,7 @@ let questionSchema = new Schema({
     },
     questionId: {
         type: String,
+        unique: true,
         required: [true, 'question id is necessary']
     },
     required: {
@@ -27,5 +29,7 @@ let questionSchema = new Schema({
         required: [true, 'user id is necessary']
     }
 }, { strict: false });
+
+questionSchema.plugin(uniqueValidator, { message: '{PATH} already exists' });
 
 module.exports = mongoose.model('Question', questionSchema);
