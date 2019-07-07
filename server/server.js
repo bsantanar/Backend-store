@@ -15,6 +15,7 @@ app.use(require('./routes/user'));
 app.use(require('./routes/question'));
 app.use(require('./routes/synthesis'));
 app.use(require('./routes/questionnaire'));
+app.use(require('./routes/document'));
 
 
 mongoose.connect('mongodb://localhost:27017/store-test', { useNewUrlParser: true }, (err, res) => {
