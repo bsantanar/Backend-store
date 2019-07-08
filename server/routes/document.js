@@ -44,12 +44,42 @@ app.post('/documents', VerifyToken, (req, res) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
-                err
+                message: 'document name already exists'
             });
         }
         res.status(200).json({
             ok: true,
             doc: documentDB
+        });
+    });
+});
+
+app.put('/documents/:id', VerifyToken, (req, res) => {
+    Document.findByIdAndUpdate(req.params.id, req.body, (err, document) => {
+        if (err) {
+            return res.status(404).json({
+                ok: false,
+                err
+            });
+        }
+        res.status(200).json({
+            ok: true,
+            document
+        });
+    });
+});
+
+app.delete('/documents/:id', VerifyToken, (req, res) => {
+    Document.findByIdAndRemove(req.params.id, (err, document) => {
+        if (err) {
+            return res.status(404).json({
+                ok: false,
+                err
+            });
+        }
+        res.status(200).json({
+            ok: true,
+            message: "deleted successfully"
         });
     });
 });
