@@ -19,6 +19,7 @@ app.use(require('./routes/document'));
 app.use(require('./routes/locale'));
 app.use(require('./routes/domain'));
 app.use(require('./routes/task'));
+app.use(require('./utils/upload'));
 
 
 mongoose.connect('mongodb://localhost:27017/store-test', { useNewUrlParser: true }, (err, res) => {
