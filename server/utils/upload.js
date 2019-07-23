@@ -54,7 +54,7 @@ app.post('/upload-image', function(req, res) {
         }
         res.json({
             ok: true,
-            message: "File uploaded"
+            message: "Image uploaded"
         });
     });
 });
@@ -72,7 +72,7 @@ app.post('/upload-html', function(req, res) {
         }
         res.json({
             ok: true,
-            message: "File uploaded"
+            message: "Html uploaded"
         });
     });
 });
