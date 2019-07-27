@@ -9,9 +9,9 @@ const app = express();
 app.use(cors());
 
 
-app.get('/users', function(req, res) {
-    res.json("get users");
-});
+// app.get('/users', function(req, res) {
+//     res.json("get users");
+// });
 
 app.get('/user/:id', VerifyToken, function(req, res) {
     User.findById(req.params.id, (err, user) => {
