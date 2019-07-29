@@ -20,7 +20,7 @@ const storage = multer.diskStorage({ //multers disk storage settings
         let ext = file.originalname.split('.')[file.originalname.split('.').length - 1];
         let datetimestamp = Date.now();
         //console.log(file.originalname);
-        cb(null, name + '-' + datetimestamp + '.' + ext);
+        cb(null, name + '.' + ext);
     }
 });
 
