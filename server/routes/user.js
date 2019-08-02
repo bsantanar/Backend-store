@@ -32,7 +32,7 @@ app.get('/user/:id', VerifyToken, function(req, res) {
 app.get('/me', VerifyToken, (req, res, next) => {
     User.findById(req.decoded.subject, (err, user) => {
         if (err) {
-            return res.status(409).json({
+            return res.status(400).json({
                 ok: false,
                 err
             });
