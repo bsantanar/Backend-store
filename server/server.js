@@ -22,7 +22,7 @@ app.use(require('./routes/task'));
 app.use(require('./utils/upload'));
 
 
-mongoose.connect('mongodb://localhost:27017/store-test', { useNewUrlParser: true }, (err, res) => {
+mongoose.connect('mongodb+srv://store-admin:store2019@cluster0-xwegw.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true }, (err, res) => {
     if (err) throw err;
     console.log("Database online");
 });
