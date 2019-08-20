@@ -12,8 +12,18 @@ const storage = multer.diskStorage({ //multers disk storage settings
     destination: (req, file, cb) => {
         let type = file.mimetype.split('/')[0];
         //console.log(file);
-        fs.ensureDirSync(`./server/uploads/${req.decoded.subject}/${type}`);
-        cb(null, `./server/uploads/${req.decoded.subject}/${type}`);
+        if (req.headers.type) {
+            if (req.headers.type == 1) {
+                fs.ensureDirSync(`./server/uploads/${req.decoded.subject}/modal`);
+                cb(null, `./server/uploads/${req.decoded.subject}/modal`);
+            } else {
+                fs.ensureDirSync(`./server/uploads/${req.decoded.subject}/template`);
+                cb(null, `./server/uploads/${req.decoded.subject}/template`);
+            }
+        } else {
+            fs.ensureDirSync(`./server/uploads/${req.decoded.subject}/${type}`);
+            cb(null, `./server/uploads/${req.decoded.subject}/${type}`);
+        }
     },
     filename: (req, file, cb) => {
         let name = file.originalname.split('.')[0];
@@ -147,7 +157,13 @@ app.get('/my-json', VerifyToken, (req, res) => {
 
 app.get('/my-html', VerifyToken, (req, res) => {
     let html = [];
-    fs.readdir(`./server/uploads/${req.decoded.subject}/text`, (err, files) => {
+    let type = "";
+    if (req.headers.type == 1) {
+        type = "modal"
+    } else {
+        type = "template"
+    }
+    fs.readdir(`./server/uploads/${req.decoded.subject}/${type}`, (err, files) => {
         if (err) {
             res.status(400).json({
                 ok: false,
@@ -176,7 +192,13 @@ app.post('/download-image/:id', VerifyToken, (req, res) => {
 });
 
 app.post('/download-html/:id', VerifyToken, (req, res) => {
-    let pathAux = path.join(__dirname, '..', 'uploads', req.decoded.subject, 'text', req.params.id);
+    let type = "";
+    if (req.headers.type == 1) {
+        type = "modal"
+    } else {
+        type = "template"
+    }
+    let pathAux = path.join(__dirname, '..', 'uploads', req.decoded.subject, type, req.params.id);
     res.download(pathAux, 'file.html', (err) => {
         if (err) {
             res.status(400).json({
@@ -219,7 +241,13 @@ app.delete('/delete-image/:id', VerifyToken, (req, res) => {
 });
 
 app.delete('/delete-html/:id', VerifyToken, (req, res) => {
-    let pathAux = path.join(__dirname, '..', 'uploads', req.decoded.subject, 'text', req.params.id);
+    let type = "";
+    if (req.headers.type == 1) {
+        type = "modal"
+    } else {
+        type = "template"
+    }
+    let pathAux = path.join(__dirname, '..', 'uploads', req.decoded.subject, type, req.params.id);
     fs.unlink(pathAux, (err) => {
         if (err) {
             res.status(400).json({
