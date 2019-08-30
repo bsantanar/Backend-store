@@ -21,6 +21,7 @@ app.use(require('./routes/domain'));
 app.use(require('./routes/task'));
 app.use(require('./routes/upload'));
 app.use(require('./routes/stage'));
+app.use(require('./routes/study'));
 
 
 mongoose.connect('mongodb+srv://store-admin:store2019@cluster0-xwegw.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true }, (err, res) => {
