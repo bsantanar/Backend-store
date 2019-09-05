@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 
 let Schema = mongoose.Schema;
 let ObjectId = Schema.ObjectId;
@@ -10,6 +11,7 @@ let synthesisSchema = new Schema({
     },
     synthesisId: {
         type: String,
+        unique: true,
         required: [true, 'synthesis id is necessary']
     },
     createdBy: {
@@ -17,5 +19,7 @@ let synthesisSchema = new Schema({
         required: [true, 'user id is necessary']
     }
 });
+
+synthesisSchema.plugin(uniqueValidator, { message: '{PATH} already exists' });
 
 module.exports = mongoose.model('Synthesis', synthesisSchema);

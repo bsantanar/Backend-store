@@ -52,7 +52,7 @@ app.post('/synthesis', VerifyToken, (req, res) => {
         if (err) {
             return res.status(409).json({
                 ok: false,
-                err
+                message: err.message
             });
         }
         res.status(200).json({
@@ -67,7 +67,7 @@ app.put('/synthesis/:id', VerifyToken, (req, res) => {
         if (err) {
             return res.status(404).json({
                 ok: false,
-                err
+                message: err.message
             });
         }
         res.status(200).json({

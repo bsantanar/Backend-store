@@ -66,7 +66,7 @@ app.post('/questions', (req, res) => {
         if (err) {
             return res.status(409).json({
                 ok: false,
-                err
+                message: err.errors.questionId.message
             });
         }
         res.status(200).json({

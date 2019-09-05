@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 
 let Schema = mongoose.Schema;
 let ObjectId = Schema.ObjectId;
@@ -6,20 +7,30 @@ let ObjectId = Schema.ObjectId;
 let questionnaireSchema = new Schema({
     instructions: {
         type: String,
-        required: [true, 'instructions is necessary']
+        required: [true, 'instructions are necessary']
     },
     questionnaireId: {
         type: String,
+        unique: true,
         required: [true, 'questionnaire id is necessary']
     },
     questions: {
         type: [ObjectId],
         required: [true, 'question(s) is necessary']
     },
+    public: {
+        type: Boolean,
+        required: [true, 'public is required']
+    },
+    tags: {
+        type: [String]
+    },
     createdBy: {
         type: ObjectId,
         required: [true, 'user id is necessary']
     }
 });
+
+questionnaireSchema.plugin(uniqueValidator, { message: 'Questionnaire title already exists' });
 
 module.exports = mongoose.model('Questionnaire', questionnaireSchema);

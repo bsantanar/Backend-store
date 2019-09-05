@@ -30,6 +30,6 @@ let questionSchema = new Schema({
     }
 }, { strict: false });
 
-questionSchema.plugin(uniqueValidator, { message: '{PATH} already exists' });
+questionSchema.plugin(uniqueValidator, { message: 'Question Id already exists' });
 
 module.exports = mongoose.model('Question', questionSchema);

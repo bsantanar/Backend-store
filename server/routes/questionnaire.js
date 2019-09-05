@@ -37,6 +37,21 @@ app.get('/questionnaires', VerifyToken, (req, res) => {
     });
 });
 
+app.get('/public-questionnaires', VerifyToken, (req, res) => {
+    Questionnaire.find({ public: true }, (err, public) => {
+        if (err) {
+            return res.status(404).json({
+                ok: false,
+                err
+            });
+        }
+        res.status(200).json({
+            ok: true,
+            public
+        });
+    });
+});
+
 app.post('/questionnaires', VerifyToken, (req, res) => {
     let body = req.body;
 
@@ -44,14 +59,22 @@ app.post('/questionnaires', VerifyToken, (req, res) => {
         questionnaireId: body.questionnaireId,
         instructions: body.instructions,
         questions: body.questions,
-        createdBy: body.user
+        createdBy: body.user,
+        public: body.public,
+        tags: body.tags
     });
 
     questionnaire.save((err, questionnaireDB) => {
         if (err) {
+            if (err.error) {
+                return res.status(400).json({
+                    ok: false,
+                    message: err.errors.questionnaireId.message
+                });
+            }
             return res.status(400).json({
                 ok: false,
-                err
+                message: err.message
             });
         }
         res.status(200).json({
