@@ -37,6 +37,21 @@ app.get('/studies', VerifyToken, (req, res) => {
     });
 });
 
+app.get('/public-studies', VerifyToken, (req, res) => {
+    Study.find({ public: true }, (err, public) => {
+        if (err) {
+            return res.status(404).json({
+                ok: false,
+                err
+            });
+        }
+        res.status(200).json({
+            ok: true,
+            public
+        });
+    });
+});
+
 app.post('/studies', VerifyToken, (req, res) => {
     let body = req.body;
 
@@ -60,7 +75,9 @@ app.post('/studies', VerifyToken, (req, res) => {
         replaceWithRelevantDocuments: body.replaceWithRelevantDocuments,
         avatar: body.avatar,
         stages: body.stages,
-        user: body.user
+        user: body.user,
+        public: body.public,
+        tags: body.tags
     });
 
     if (body.maxStars) {

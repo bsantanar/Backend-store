@@ -88,6 +88,13 @@ let studySchema = new Schema({
     user: {
         type: ObjectId,
         required: [true, 'user id is necessary']
+    },
+    public: {
+        type: Boolean,
+        required: [true, 'public is required']
+    },
+    tags: {
+        type: [String]
     }
 }, { strict: false });
 
