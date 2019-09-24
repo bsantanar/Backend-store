@@ -19,6 +19,9 @@ app.post('/upload-image', VerifyToken, (req, res) => {
             });
             return;
         }
+        if (req.headers.public == 1) {
+            utils.copyFilePublic(req);
+        }
         res.json({
             ok: true,
             message: "Image uploaded"
@@ -37,6 +40,9 @@ app.post('/upload-html', VerifyToken, (req, res) => {
             });
             return;
         }
+        if (req.headers.public == 1) {
+            utils.copyFilePublic(req);
+        }
         res.json({
             ok: true,
             message: "Html uploaded"
@@ -53,9 +59,76 @@ app.post('/upload-locale', VerifyToken, (req, res) => {
             });
             return;
         }
+        if (req.headers.public == 1) {
+            utils.copyFilePublic(req);
+        }
         res.json({
             ok: true,
             message: "Locale uploaded"
+        });
+    });
+});
+
+app.get('/public-modals', VerifyToken, (req, res) => {
+    fs.readdir('./server/uploads/public/modal', (err, files) => {
+        if (err) {
+            res.status(400).json({
+                ok: false,
+                message: err.message
+            });
+            return;
+        }
+        res.status(200).json({
+            ok: true,
+            modals: files
+        });
+    });
+});
+
+app.get('/public-templates', VerifyToken, (req, res) => {
+    fs.readdir('./server/uploads/public/template', (err, files) => {
+        if (err) {
+            res.status(400).json({
+                ok: false,
+                message: err.message
+            });
+            return;
+        }
+        res.status(200).json({
+            ok: true,
+            templates: files
+        });
+    });
+});
+
+app.get('/public-locales', VerifyToken, (req, res) => {
+    fs.readdir('./server/uploads/public/application', (err, files) => {
+        if (err) {
+            res.status(400).json({
+                ok: false,
+                message: err.message
+            });
+            return;
+        }
+        res.status(200).json({
+            ok: true,
+            locales: files
+        });
+    });
+});
+
+app.get('/public-images', VerifyToken, (req, res) => {
+    fs.readdir('./server/uploads/public/image', (err, files) => {
+        if (err) {
+            res.status(400).json({
+                ok: false,
+                message: err.message
+            });
+            return;
+        }
+        res.status(200).json({
+            ok: true,
+            images: files
         });
     });
 });

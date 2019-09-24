@@ -26,6 +26,22 @@ const storage = multer.diskStorage({ //multers disk storage settings
     }
 });
 
+const copyFilePublic = (req) => {
+    let type = req.file.mimetype.split('/')[0];
+    if (req.headers.type) {
+        if (req.headers.type == 1) {
+            fs.ensureDirSync(`./server/uploads/public/modal`);
+            fs.copyFileSync(`./server/uploads/${req.decoded.subject}/modal/${req.file.filename}`, `./server/uploads/public/modal/${req.file.filename}`);
+        } else {
+            fs.ensureDirSync(`./server/uploads/public/template`);
+            fs.copyFileSync(`./server/uploads/${req.decoded.subject}/template/${req.file.filename}`, `./server/uploads/public/template/${req.file.filename}`);
+        }
+    } else {
+        fs.ensureDirSync(`./server/uploads/public/${type}`);
+        fs.copyFileSync(`./server/uploads/${req.decoded.subject}/${type}/${req.file.filename}`, `./server/uploads/public/${type}/${req.file.filename}`);
+    }
+}
+
 const uploadImage = multer({ //multer settings
     storage,
     fileFilter: (req, file, callback) => {
@@ -61,4 +77,4 @@ const uploadLocale = multer({
     }
 }).single('file');
 
-module.exports = { uploadHtml, uploadImage, uploadLocale, storage };
+module.exports = { uploadHtml, uploadImage, uploadLocale, copyFilePublic };
