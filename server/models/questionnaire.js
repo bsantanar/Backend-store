@@ -11,7 +11,6 @@ let questionnaireSchema = new Schema({
     },
     questionnaireId: {
         type: String,
-        unique: true,
         required: [true, 'questionnaire id is necessary']
     },
     questions: {

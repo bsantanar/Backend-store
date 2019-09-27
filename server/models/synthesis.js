@@ -11,7 +11,6 @@ let synthesisSchema = new Schema({
     },
     synthesisId: {
         type: String,
-        unique: true,
         required: [true, 'synthesis id is necessary']
     },
     createdBy: {

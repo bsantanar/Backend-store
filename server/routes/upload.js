@@ -191,6 +191,19 @@ app.get('/my-html', VerifyToken, (req, res) => {
 });
 
 app.post('/download-image/:id', VerifyToken, (req, res) => {
+    if (req.headers.public == '1') {
+        let pathAux = path.join(__dirname, '..', 'uploads', 'public', 'image', req.params.id);
+        res.download(pathAux, 'image.jpg', (err) => {
+            if (err) {
+                res.status(400).json({
+                    ok: false,
+                    message: err
+                });
+                return;
+            }
+        });
+        return;
+    }
     let pathAux = path.join(__dirname, '..', 'uploads', req.decoded.subject, 'image', req.params.id);
     res.download(pathAux, 'image.jpg', (err) => {
         if (err) {
@@ -210,6 +223,19 @@ app.post('/download-html/:id', VerifyToken, (req, res) => {
     } else {
         type = "template"
     }
+    if (req.headers.public == '1') {
+        let pathAux = path.join(__dirname, '..', 'uploads', 'public', type, req.params.id);
+        res.download(pathAux, 'file.html', (err) => {
+            if (err) {
+                res.status(400).json({
+                    ok: false,
+                    message: err
+                });
+                return;
+            }
+        });
+        return;
+    }
     let pathAux = path.join(__dirname, '..', 'uploads', req.decoded.subject, type, req.params.id);
     res.download(pathAux, 'file.html', (err) => {
         if (err) {
@@ -223,6 +249,19 @@ app.post('/download-html/:id', VerifyToken, (req, res) => {
 });
 
 app.post('/download-locale/:id', VerifyToken, (req, res) => {
+    if (req.headers.public == '1') {
+        let pathAux = path.join(__dirname, '..', 'uploads', 'public', 'application', req.params.id);
+        res.download(pathAux, 'file.json', (err) => {
+            if (err) {
+                res.status(400).json({
+                    ok: false,
+                    message: err
+                });
+                return;
+            }
+        });
+        return;
+    }
     let pathAux = path.join(__dirname, '..', 'uploads', req.decoded.subject, 'application', req.params.id);
     res.download(pathAux, 'file.json', (err) => {
         if (err) {
@@ -233,6 +272,31 @@ app.post('/download-locale/:id', VerifyToken, (req, res) => {
             return;
         }
     });
+});
+
+//Copy public file to 
+app.post('/add-store-asset/:id', VerifyToken, (req, res) => {
+    if (req.headers.type == 1) {
+        fs.ensureDirSync(`./server/uploads/${req.decoded.subject}/application`);
+        fs.copyFileSync(`./server/uploads/public/application/${req.params.id}`, `./server/uploads/${req.decoded.subject}/application/${req.params.id}`);
+    }
+    if (req.headers.type == 2) {
+        fs.ensureDirSync(`./server/uploads/${req.decoded.subject}/modal`);
+        fs.copyFileSync(`./server/uploads/public/modal/${req.params.id}`, `./server/uploads/${req.decoded.subject}/modal/${req.params.id}`);
+    }
+    if (req.headers.type == 3) {
+        fs.ensureDirSync(`./server/uploads/${req.decoded.subject}/template`);
+        fs.copyFileSync(`./server/uploads/public/template/${req.params.id}`, `./server/uploads/${req.decoded.subject}/template/${req.params.id}`);
+    }
+    if (req.headers.type == 4) {
+        fs.ensureDirSync(`./server/uploads/${req.decoded.subject}/image`);
+        fs.copyFileSync(`./server/uploads/public/image/${req.params.id}`, `./server/uploads/${req.decoded.subject}/image/${req.params.id}`);
+    }
+    res.status(200).json({
+        ok: true,
+        message: 'Copied'
+    });
+    return;
 });
 
 app.delete('/delete-image/:id', VerifyToken, (req, res) => {

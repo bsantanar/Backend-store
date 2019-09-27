@@ -7,7 +7,6 @@ let ObjectId = Schema.ObjectId;
 let studySchema = new Schema({
     id: {
         type: String,
-        unique: true,
         required: [true, 'title is necessary']
     },
     locale: {
@@ -98,6 +97,5 @@ let studySchema = new Schema({
     }
 }, { strict: false });
 
-studySchema.plugin(uniqueValidator, { message: 'Title already exists' });
 
 module.exports = mongoose.model('Study', studySchema);

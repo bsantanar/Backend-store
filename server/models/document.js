@@ -7,8 +7,7 @@ let ObjectId = Schema.ObjectId;
 let documentSchema = new Schema({
     docName: {
         type: String,
-        required: [true, 'document name is necessary'],
-        unique: true
+        required: [true, 'document name is necessary']
     },
     title: {
         type: String,
