@@ -34,4 +34,4 @@ const server = app.listen(process.env.PORT, () => {
     console.log("El servidor está inicializado en el puerto 3000");
 });
 
-server.timeout = 15000;
+server.timeout = 30000;
