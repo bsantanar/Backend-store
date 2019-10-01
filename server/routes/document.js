@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require('cors');
 const Document = require('../models/document');
 const VerifyToken = require('../auth/VerifyToken');
+const docDownloader = require('../utils/documentDownloader');
 
 const app = express();
 app.use(cors());
@@ -19,6 +20,25 @@ app.get('/my-documents', VerifyToken, async(req, res) => {
             documents
         });
         return;
+    });
+});
+
+app.post('/preview-document', VerifyToken, (req, res) => {
+    let body = req.body;
+
+    docDownloader.preview(body, req.decoded.subject, (err, document) => {
+        if (err) {
+            console.log(err);
+            return res.status(400).json({
+                ok: false,
+                message: err
+            });
+        }
+        //console.log(document);
+        res.status(200).json({
+            ok: true,
+            document
+        });
     });
 });
 
