@@ -34,7 +34,7 @@ app.post('/preview-document', VerifyToken, (req, res) => {
                 message: err
             });
         }
-        //console.log(document);
+        console.log(document);
         res.status(200).json({
             ok: true,
             document

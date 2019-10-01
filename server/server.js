@@ -30,6 +30,8 @@ mongoose.connect('mongodb+srv://store-admin:store2019@cluster0-xwegw.mongodb.net
 });
 
 
-app.listen(process.env.PORT, () => {
+const server = app.listen(process.env.PORT, () => {
     console.log("El servidor está inicializado en el puerto 3000");
 });
+
+server.timeout = 15000;
