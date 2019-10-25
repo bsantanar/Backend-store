@@ -15,9 +15,9 @@ const download = (docName, documentUrl, userId, callback) => {
     //     downloadPath = path.join(downloadDir, docName);
     //     queryPath = path.join(dirName, docName);
     // } else {
-    fs.ensureDirSync(`./server/uploads/${userId}/preview`);
-    downloadPath = path.join(__dirname, '..', 'uploads', userId, 'preview');
-    queryPath = path.join(__dirname, '..', 'uploads', userId, 'preview');
+    fs.ensureDirSync(`./server/public/${userId}/preview`);
+    downloadPath = path.join(__dirname, '..', 'public', userId, 'preview');
+    queryPath = path.join(userId, 'preview');
     //}
 
     let options = {
@@ -50,7 +50,7 @@ const download = (docName, documentUrl, userId, callback) => {
                     let response = {
                         docName: docName,
                         pageUrl: res2[0].url,
-                        route: path.join(queryPath, res2[0].filename),
+                        route: path.join(queryPath, res2[0].filename).replace(/\\/g, "/"),
                         fullPath: path.join(downloadPath, res2[0].filename)
                     };
 

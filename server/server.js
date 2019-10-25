@@ -4,6 +4,7 @@ const express = require("express");
 const mongoose = require('mongoose');
 const app = express();
 const bodyParser = require("body-parser");
+const path = require('path');
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -22,7 +23,7 @@ app.use(require('./routes/task'));
 app.use(require('./routes/upload'));
 app.use(require('./routes/stage'));
 app.use(require('./routes/study'));
-
+app.use('/static', express.static(path.join(__dirname, 'public')));
 
 mongoose.connect('mongodb+srv://store-admin:store2019@cluster0-xwegw.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true }, (err, res) => {
     if (err) throw err;
@@ -31,7 +32,7 @@ mongoose.connect('mongodb+srv://store-admin:store2019@cluster0-xwegw.mongodb.net
 
 
 const server = app.listen(process.env.PORT, () => {
-    console.log("El servidor está inicializado en el puerto 3000");
+    console.log("Server initialized at port 3000");
 });
 
-server.timeout = 90000;
+server.timeout = 60000;

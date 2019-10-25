@@ -9,7 +9,7 @@
     },
     "nodemonConfig": {
         "ignore": [
-            "server/uploads/*"
+            "server/public/*"
         ]
     },
     "author": "",
