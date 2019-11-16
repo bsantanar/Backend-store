@@ -23,6 +23,7 @@ app.use(require('./routes/task'));
 app.use(require('./routes/upload'));
 app.use(require('./routes/stage'));
 app.use(require('./routes/study'));
+app.use(require('./routes/publish'));
 app.use('/static', express.static(path.join(__dirname, 'public')));
 
 mongoose.connect('mongodb+srv://store-admin:store2019@cluster0-xwegw.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true }, (err, res) => {
@@ -32,7 +33,7 @@ mongoose.connect('mongodb+srv://store-admin:store2019@cluster0-xwegw.mongodb.net
 
 
 const server = app.listen(process.env.PORT, () => {
-    console.log("Server initialized at port 3000");
+    console.log(`Server initialized at port ${process.env.PORT}`);
 });
 
 server.timeout = 60000;
