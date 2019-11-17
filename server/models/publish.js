@@ -7,9 +7,13 @@ let publishSchema = new Schema({
     date: {
         type: Date
     },
-    password: {
-        type: String,
-        required: [true, 'password is required']
+    // password: {
+    //     type: String,
+    //     required: [true, 'password is required']
+    // },
+    user: {
+        type: ObjectId,
+        required: [true, 'user is required']
     }
 }, { strict: false });
 

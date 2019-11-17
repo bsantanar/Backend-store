@@ -6,15 +6,31 @@ const VerifyToken = require('../auth/VerifyToken');
 const app = express();
 app.use(cors());
 
+app.get('/my-publishes', VerifyToken, (req, res) => {
+    Publish.find({user: req.decoded.subject}, (err, publishes) => {
+        if (err) {
+            return res.status(404).json({
+                ok: false,
+                err
+            });
+        }
+        res.status(200).json({
+            ok: true,
+            publishes
+        });
+    });
+});
+
 app.post('/publish', VerifyToken, (req, res) => {
     let body = req.body;
     
     let publish = new Publish({
         date: new Date(Date.now()),
         user: body.user,
-        password: body.password,
+        //password: body.password,
         docs: body.docs,
-        study: body.study
+        study: body.study,
+        owner: body.owner
     });
 
     publish.save((err, pub) => {
@@ -25,8 +41,7 @@ app.post('/publish', VerifyToken, (req, res) => {
             });
         }
         res.status(200).json({
-            ok: true,
-            data: pub
+            ok: true
         });
     });
 });
