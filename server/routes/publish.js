@@ -23,9 +23,13 @@ app.get('/my-publishes', VerifyToken, (req, res) => {
 
 app.post('/publish', VerifyToken, (req, res) => {
     let body = req.body;
-    
-    let publish = new Publish({
-        date: new Date(Date.now()),
+    var date = new Date();
+    var dd = date.getDate();
+    var mm = date.getMonth() + 1;
+    var yyyy = date.getFullYear();
+    var today = dd + '/' + mm + '/' + yyyy;
+    var publish = new Publish({
+        date: today,
         user: body.user,
         //password: body.password,
         docs: body.docs,
