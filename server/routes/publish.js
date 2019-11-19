@@ -34,7 +34,10 @@ app.post('/publish', VerifyToken, (req, res) => {
         //password: body.password,
         docs: body.docs,
         study: body.study,
-        owner: body.owner
+        owner: body.owner,
+        questions: body.questions,
+        questionnaires: body.questionnaires,
+        stages: body.stages
     });
 
     publish.save((err, pub) => {
