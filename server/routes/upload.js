@@ -274,7 +274,22 @@ app.post('/download-locale/:id', VerifyToken, (req, res) => {
     });
 });
 
-//Copy public file to 
+app.post('/download', (req, res) => {
+    let body = req.body;
+    let dest = body.path.split('/');
+    let pathAux = path.join(__dirname, '..', 'uploads', dest[0], dest[1], dest[2]);
+    res.download(pathAux, 'file.html', (err) => {
+        if(err) {
+            res.status(400).json({
+                ok: false,
+                message: err
+            });
+            return;
+        }
+    });
+});
+
+//Copy public file to user files
 app.post('/add-store-asset/:id', VerifyToken, (req, res) => {
     if (req.headers.type == 1) {
         fs.ensureDirSync(`./server/uploads/${req.decoded.subject}/application`);
