@@ -10,15 +10,15 @@ let studySchema = new Schema({
         required: [true, 'title is necessary']
     },
     locale: {
-        type: String,
+        type: Object,
         required: [true, 'locale is necessary']
     },
     domain: {
-        type: String,
+        type: Object,
         required: [true, 'domain is necessary']
     },
     task: {
-        type: String,
+        type: Object,
         required: [true, 'task is necessary']
     },
     maxGlobalTime: {

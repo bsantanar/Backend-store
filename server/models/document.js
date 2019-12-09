@@ -14,18 +14,18 @@ let documentSchema = new Schema({
         required: [true, 'title is necessary']
     },
     locale: {
-        type: String,
+        type: Object,
         required: [true, 'locale is necessary']
     },
     relevant: {
         type: Boolean
     },
     task: {
-        type: [String],
+        type: [Object],
         required: [true, 'tasks is necessary']
     },
     domain: {
-        type: [String],
+        type: [Object],
         required: [true, 'domains is necessary']
     },
     keywords: {

@@ -30,6 +30,4 @@ let questionnaireSchema = new Schema({
     }
 });
 
-questionnaireSchema.plugin(uniqueValidator, { message: 'Questionnaire title already exists' });
-
 module.exports = mongoose.model('Questionnaire', questionnaireSchema);

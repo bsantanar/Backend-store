@@ -53,4 +53,19 @@ app.post('/publish', VerifyToken, (req, res) => {
     });
 });
 
+app.delete('/publish/:id', VerifyToken, (req, res) => {
+    Publish.findByIdAndRemove(req.params.id, (err, publish) => {
+        if (err) {
+            return res.status(404).json({
+                ok: false,
+                err
+            });
+        }
+        res.status(200).json({
+            ok: true,
+            message: "deleted successfully"
+        });
+    });
+});
+
 module.exports = app;
