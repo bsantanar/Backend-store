@@ -60,7 +60,7 @@ app.post('/questionnaires', VerifyToken, (req, res) => {
         instructions: body.instructions,
         questions: body.questions,
         createdBy: body.user,
-        public: body.public,
+        public: body.public || false,
         tags: body.tags
     });
 

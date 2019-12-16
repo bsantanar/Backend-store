@@ -37,3 +37,6 @@ const server = app.listen(process.env.PORT, () => {
 });
 
 server.timeout = 60000;
+
+// Export our app for testing purposes
+module.exports = app;

@@ -22,7 +22,7 @@ app.get('/my-questions', VerifyToken, async(req, res) => {
     });
 });
 
-app.get('/questions', VerifyToken, async(req, res) => {
+app.get('/questions', async(req, res) => {
     await Question.find((err, questions) => {
         if (err) {
             return res.status(404).json({
