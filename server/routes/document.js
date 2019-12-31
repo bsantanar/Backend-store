@@ -57,7 +57,7 @@ app.post('/documents', VerifyToken, (req, res) => {
         url: body.url,
         maskedUrl: body.maskedUrl,
         searchSnippet: body.searchSnippet,
-        user: body.user
+        user: req.decoded.subject
     });
 
     document.save((err, documentDB) => {

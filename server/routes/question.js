@@ -38,7 +38,7 @@ app.get('/questions', async(req, res) => {
     })
 });
 
-app.post('/questions', (req, res) => {
+app.post('/questions', VerifyToken, (req, res) => {
     let body = req.body;
     //console.log(body);
     let question = new Question({
@@ -47,18 +47,18 @@ app.post('/questions', (req, res) => {
         type: body.type,
         required: body.required,
         hint: body.hint,
-        user: body.user
+        user: req.decoded.subject
     });
 
     if (body.options) {
         question.set('options', body.options);
-    } else if (body.step) {
+    } if (body.step) {
         question.set('min', body.min);
         question.set('max', body.max);
         question.set('step', body.step);
         question.set('minLabel', body.minLabel);
         question.set('maxLabel', body.maxLabel);
-    } else if (body.maxStars) {
+    } if (body.maxStars) {
         question.set('maxStars', body.maxStars);
     }
 

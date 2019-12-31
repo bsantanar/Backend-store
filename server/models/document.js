@@ -51,6 +51,5 @@ let documentSchema = new Schema({
     }
 });
 
-documentSchema.plugin(uniqueValidator, { message: '{PATH} already exists' });
 
 module.exports = mongoose.model('Document', documentSchema);

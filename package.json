@@ -5,7 +5,7 @@
     "main": "server/server.js",
     "scripts": {
         "start": "node server/server.js",
-        "test": "mocha tests/*.js --exit --timeout 5000"
+        "test": "nyc mocha tests/*.js --exit --timeout 50000"
     },
     "nodemonConfig": {
         "ignore": [
@@ -34,6 +34,7 @@
     "devDependencies": {
         "chai": "^4.2.0",
         "chai-http": "^4.0.0",
-        "mocha": "^6.2.2"
+        "mocha": "^6.2.2",
+        "nyc": "^14.1.1"
     }
 }

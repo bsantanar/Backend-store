@@ -30,7 +30,7 @@ app.post('/domains', VerifyToken, (req, res) => {
         alias: body.alias,
         code: body.code,
         description: body.description,
-        user: body.user
+        user: req.decoded.subject
     });
 
     domain.save((err, domainDB) => {
