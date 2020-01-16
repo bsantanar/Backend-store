@@ -75,6 +75,11 @@ const preview = (docObj, userId, callback) => {
     //console.log('Attempting to preview document!');
     //console.log('Document URL', docObj.url);
 
+    if(Object.entries(docObj).length === 0){
+        callback({msg: 'ERROR'});
+        return;
+    }
+
     let document = {
         _id: '<preview>',
         docName: docObj.docName,
@@ -84,7 +89,7 @@ const preview = (docObj, userId, callback) => {
         task: docObj.task || ['preview'],
         domain: docObj.domain || ['preview'],
         keywords: docObj.keywords || [],
-        date: docObj.date || Utils.getDate(),
+        date: docObj.date,
         url: docObj.maskedUrl || docObj.url || '',
         searchSnippet: docObj.searchSnippet || '',
         indexedBody: ''

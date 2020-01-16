@@ -30,7 +30,7 @@ app.post('/tasks', VerifyToken, (req, res) => {
         alias: body.alias,
         code: body.code,
         description: body.description,
-        user: body.user
+        user: req.decoded.subject
     });
 
     task.save((err, taskDB) => {

@@ -21,7 +21,7 @@ app.get('/user/:id', VerifyToken, function(req, res) {
                 err
             });
         }
-        if (!user) return res.status(404).send("No user found.");
+        if (!user) return res.status(404).send({msg: "No user found."});
         res.status(200).json({
             ok: true,
             user

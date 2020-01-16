@@ -22,13 +22,13 @@ app.get('/my-stages', VerifyToken, async(req, res) => {
     });
 });
 
-app.post('/stages', (req, res) => {
+app.post('/stages', VerifyToken, (req, res) => {
     let body = req.body;
     //console.log(body);
     let stage = new Stage({
         id: body.id,
         time: body.time,
-        user: body.user,
+        user: req.decoded.subject,
         type: body.type,
         state: body.state
     });

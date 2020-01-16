@@ -10,10 +10,10 @@ const should = chai.should();
 var token = '';
 var newId = '';
 
-describe("Documents", () => {
+describe("synthesis", () => {
     describe("GET /", () => {
-      //Test get my documents
-      it("should get created documents", (done) => {
+      //Test get my synthesis
+      it("should get created synthesis", (done) => {
         chai.request(app)
           .post(`/login`)
           .send({email: 'a@a.com', password: '123'})
@@ -22,7 +22,7 @@ describe("Documents", () => {
             token = res.body.token;
             res.body.should.be.a('object');
             chai.request(app)
-              .get(`/my-documents`)
+              .get(`/my-synthesis`)
               .set('Authorization', `Bearer ${token}`)
               .end((err, res) => {
                 res.should.have.status(200);
@@ -35,50 +35,29 @@ describe("Documents", () => {
     describe("POST /", () => {
         //Test post and delete a document
         it("should post and delete a test doc", (done) => {
-            let testDoc = {
-                docName: 'test',
+            let testSynthesis = {
                 title: 'test',
-                locale: 'test',
-                relevant: true,
-                task: ['test'],
-                domain: ['test'],
-                keywords: ['test'],
-                date: new Date(),
-                url: 'test',
-                maskedUrl: 'test',
-                searchSnippet: 'test'
+                synthesisId: 'test',
             }
             chai.request(app)
-                .post('/documents')
+                .post('/synthesis')
                 .set('Authorization', `Bearer ${token}`)
-                .send(testDoc)
+                .send(testSynthesis)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
-                    newId = res.body.doc._id;
-                    done();
-                });
-        });
-        it("should return error on preview", (done) => {
-            let test = {};
-            chai.request(app)
-                .post('/preview-document')
-                .set('Authorization', `Bearer ${token}`)
-                .send(test)
-                .end((err, res) => {
-                    res.should.have.status(400);
-                    res.body.should.be.a('object');
+                    newId = res.body.synthesis._id;
                     done();
                 });
         });
     });
     describe("PUT /", () => {
-        //Test edit created doc
-        it("should edit the new doc", (done) => {
-            let editDoc = {title: "test2"}
+        //Test edit created synthesis
+        it("should edit the new synthesis", (done) => {
+            let editSynthesis = {name: "test2"}
             chai.request(app)
-                .put(`/documents/${newId}`)
-                .send(editDoc)
+                .put(`/synthesis/${newId}`)
+                .send(editSynthesis)
                 .set('Authorization', `Bearer ${token}`)
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -86,13 +65,13 @@ describe("Documents", () => {
                     done();
                 });
         });
-        //Test edit doc non existing
+        //Test edit synthesis non existing
         it("should throw error", (done) => {
             let id = 1;
-            let editDoc = {title: "test2"}
+            let editSynthesis = {name: "test2"}
             chai.request(app)
-                .put(`/documents/${id}`)
-                .send(editDoc)
+                .put(`/synthesis/${id}`)
+                .send(editSynthesis)
                 .set('Authorization', `Bearer ${token}`)
                 .end((err, res) => {
                     res.should.have.status(404);
@@ -102,10 +81,10 @@ describe("Documents", () => {
         });
     });
     describe("DELETE /", () => {
-        //Test delete created doc
-        it("should delete the new doc", (done) => {
+        //Test delete created synthesis
+        it("should delete the new synthesis", (done) => {
             chai.request(app)
-            .delete(`/documents/${newId}`)
+            .delete(`/synthesis/${newId}`)
             .set('Authorization', `Bearer ${token}`)
             .end((err, res) => {
                 res.should.have.status(200);
@@ -113,11 +92,11 @@ describe("Documents", () => {
                 done();
             });
         });
-        //Test delete doc non existing
+        //Test delete synthesis non existing
         it("should throw error delete", (done) => {
             let id = 1;
             chai.request(app)
-                .delete(`/documents/${id}`)
+                .delete(`/synthesis/${id}`)
                 .set('Authorization', `Bearer ${token}`)
                 .end((err, res) => {
                     res.should.have.status(404);

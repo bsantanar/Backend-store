@@ -30,7 +30,7 @@ app.post('/publish', VerifyToken, (req, res) => {
     var today = dd + '/' + mm + '/' + yyyy;
     var publish = new Publish({
         date: today,
-        user: body.user,
+        user: req.decoded.subject,
         //password: body.password,
         docs: body.docs,
         study: body.study,
@@ -48,7 +48,8 @@ app.post('/publish', VerifyToken, (req, res) => {
             });
         }
         res.status(200).json({
-            ok: true
+            ok: true,
+            pub
         });
     });
 });

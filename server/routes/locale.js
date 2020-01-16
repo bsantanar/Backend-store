@@ -29,7 +29,7 @@ app.post('/locales', VerifyToken, (req, res) => {
         name: body.name,
         alias: body.alias,
         code: body.code,
-        user: body.user
+        user: req.decoded.subject
     });
 
     locale.save((err, localeDB) => {
