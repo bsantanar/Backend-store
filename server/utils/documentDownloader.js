@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const scrape = require('website-scraper');
 const charset = require('charset');
-const iconv = require('iconv');
+//const iconv = require('iconv');
 const cheerio = require('cheerio');
 
 
@@ -122,13 +122,13 @@ const readFile = (path) => {
 
         if (encoding === 'utf-8' || encoding === 'utf8' || !encoding) {
             return htmlString;
-        } else {
-            var ic = new iconv.Iconv(encoding, 'UTF-8//TRANSLIT//IGNORE'),
-                buf = ic.convert(htmlBuffer),
-                str = buf.toString('utf-8');
+        }// else {
+        //     var ic = new iconv.Iconv(encoding, 'UTF-8//TRANSLIT//IGNORE'),
+        //         buf = ic.convert(htmlBuffer),
+        //         str = buf.toString('utf-8');
 
-            return str;
-        }
+        //     return str;
+        // }
     } catch (e) {
         console.error(e);
         return '';
