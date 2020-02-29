@@ -1,11 +1,12 @@
-require('./config/config');
 
 const express = require("express");
 const mongoose = require('mongoose');
 const app = express();
 const bodyParser = require("body-parser");
 const path = require('path');
-
+const dotenv = require('dotenv');
+dotenv.config();
+require('./config/config');
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -26,7 +27,7 @@ app.use(require('./routes/study'));
 app.use(require('./routes/publish'));
 app.use('/static', express.static(path.join(__dirname, 'public')));
 
-mongoose.connect('mongodb+srv://store-admin:store2019@cluster0-xwegw.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true }, (err, res) => {
+mongoose.connect(process.env.DB_URL, { useNewUrlParser: true }, (err, res) => {
     if (err) throw err;
     console.log("Database online");
 });
