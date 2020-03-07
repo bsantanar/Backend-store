@@ -37,7 +37,8 @@ app.post('/publish', VerifyToken, (req, res) => {
         owner: body.owner,
         questions: body.questions,
         questionnaires: body.questionnaires,
-        stages: body.stages
+        stages: body.stages,
+        synthesis: body.synthesis
     });
 
     publish.save((err, pub) => {
